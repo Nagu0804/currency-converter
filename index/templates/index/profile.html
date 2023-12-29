@@ -1,0 +1,103 @@
+{% extends 'index/base.html' %}
+
+{% block content %}
+<div class="container-fluid d-flex justify-content-center align-items-center">
+    <div class="card p-4">
+        <div class="text-center mb-4">
+            <h2>{{ request.user.username|title }}</h2>
+        </div>
+
+        <div class="text-center">
+            <div class="img-fluid img-thumbnail rounded shadow mb-3" style="width: 20rem;">
+                {% if form.instance.profile_picture %}
+                    <img class="card-img-top" src="{{ form.instance.profile_picture.url }}" alt="Profile Image">
+                {% else %}
+                    <img class="card-img-top" src="https://placeholder.photo/img/150" alt="Profile Image">
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="mb-4" id="profile-view1">
+            <p class="card-text"><strong>Email:</strong> {{ request.user.email }}</p>
+            <p class="card-text"><strong>Bio:</strong> {{ form.instance.bio|capfirst }}</p>
+        </div>
+        <div class="mb-4" id="profile-view2">
+            <p class="card-text"><strong>Occupation:</strong> {{ form.instance.occupation|title }}</p>
+            <p class="card-text"><strong>Education:</strong> {{ form.instance.education|title }}</p>
+            <p class="card-text"><strong>Interests:</strong> {{ form.instance.interests|title }}</p>
+            <p class="card-text"><strong>Date Joined:</strong> {{ request.user.date_joined }}</p>
+            <!-- Add more fields as needed -->
+            <button id="edit-btn" class="btn btn-primary">Edit</button>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+
+
+
+
+
+        <div class="mb-4" id="profile-form" style="display: none;">
+    <!-- Edit form goes here -->
+    <form method="post" action="{% url 'profile' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <!-- Bio -->
+        <div class="form-group">
+            <label for="{{ form.bio.id_for_label }}" class="form-label">Bio:</label>
+            {{ form.bio }}
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="form-group">
+            {{ form.profile_picture }}
+            {% if img_obj %}  
+                <h3>Successfully uploaded: {{ img_obj.title }}</h3> 
+                <img src="{{ img_obj.image.url }}" alt="connect" style="max-height:300px">
+            {% endif %}
+        </div>
+
+        <!-- Occupation -->
+        <div class="form-group">
+            <label for="{{ form.occupation.id_for_label }}" class="form-label">Occupation:</label>
+            {{ form.occupation }}
+        </div>
+
+        <!-- Education -->
+        <div class="form-group">
+            <label for="{{ form.education.id_for_label }}" class="form-label">Education:</label>
+            {{ form.education }}
+        </div>
+
+        <!-- Interests -->
+        <div class="form-group">
+            <label for="{{ form.interests.id_for_label }}" class="form-label">Interests:</label>
+            {{ form.interests }}
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
+        <button type="button" class="btn btn-secondary mt-2" onclick="cancelEdit()">Cancel</button>
+    </form>
+</div>
+
+
+
+
+
+    </div>
+</div>
+
+<script>
+    // JavaScript to toggle between view and edit modes
+    function cancelEdit() {
+        document.getElementById('profile-view1').style.display = 'block';
+        document.getElementById('profile-view2').style.display = 'block';
+        document.getElementById('profile-form').style.display = 'none';
+    }
+
+    document.getElementById('edit-btn').addEventListener('click', function() {
+        document.getElementById('profile-view1').style.display = 'none';
+        document.getElementById('profile-view2').style.display = 'none';
+        document.getElementById('profile-form').style.display = 'block';
+    });
+</script>
+
+{% endblock content %}

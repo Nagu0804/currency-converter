@@ -1,0 +1,47 @@
+{% extends 'index/base.html' %}
+{% load static %}
+{% block content %}
+
+  <div class="container mt-5">
+    <div class="card text-center">
+      <div class="card-header">
+        <h1>Currency Converter</h1>
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Welcome to our Currency Converter</h5>
+        <p class="card-text">Convert your currency with ease.</p>
+        <a href="{% url 'convert_currency' %}" class="btn btn-primary">Go to Currency Converter</a>
+
+        <!-- Display Currency Conversion Rates -->
+        <div class="mt-4">
+          <div class="bg-light p-3 rounded transparent-div bg-transparent">
+            <h2>List of Latest Exchange Rates - {{ formatted_datetime }}</h2>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Currency</th>
+                    <th scope="col">Rate</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for currency, rate in currency_dict.rates.items %}
+                    <tr>
+                      <td>{{ currency }}</td>
+                      <td>{{ rate }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="text-center">
+      © 2023 Upskilled Company
+    </div>
+  </footer>
+
+{% endblock content %}

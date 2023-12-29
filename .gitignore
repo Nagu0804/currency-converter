@@ -1,0 +1,5 @@
+/django-currency-converter
+*.pyc
+.vscode/*
+db.sqlite3
+static/*
