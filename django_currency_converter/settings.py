@@ -25,7 +25,7 @@ SECRET_KEY = 'ma)u$girvd9wp%ih2qnby6v^#wu4z&7vklo2m*zr3bm=8977m-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -123,3 +123,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
