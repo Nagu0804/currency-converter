@@ -1,1 +1,0 @@
-web: gunicorn django_currency_converter.wsgi
